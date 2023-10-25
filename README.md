@@ -3,6 +3,8 @@ Overview:
 
 The system is designed to retrieve and analyze GitHub data for specific queries. It reads parsed GitHub data from a JSON file, tokenizes and chunks the text, and then computes embeddings for these chunks. These embeddings are stored in a Pinecone index for efficient vector search. Finally, the system uses GPT-4 to generate reasoning for the top-k relevant chunks to a given query.
 
+Workflow: 
+
 1. Data Collection:
 
 * 'get_user_repos()': It fetches details about all repositories for a given GitHub username. It returns a list of dictionaries, each containing information like the repository name, description, URL, programming language used, star count, and fork count.
