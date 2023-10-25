@@ -53,4 +53,10 @@ Workflow:
    
 * For each of the top 5 repositories returned in the prevous response, I used GPT-4 to generate a brief explanation detailing its relevance to the query.
   
-* To do this, I created an augmented query, where I combined the response with the query, and then defined my custom primer to give context to GPT-4 about the task that it needs to perform. 
+* To do this, I created an augmented query, where I combined the response with the query, and then defined my custom primer to give context to GPT-4 about the task that it needs to perform. The format of the augmented query is :
+
+augmented_query = "{ 'Query':'" + query + "'," + "'chunk_list':'" + transformed_data_str + "'}"
+
+* The response of gpt4 for the system-user based query is. The input to this is the primer (which is basically giving context to the system about how to answer the user input queries, along with the augmented query defined in the previous step. )
+
+[{"id_1":, "summary_1":, "relevant_text_1":},{"id_2":, "summary_2":,"relevant_text_2":}]
