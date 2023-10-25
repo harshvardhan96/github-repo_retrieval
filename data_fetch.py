@@ -5,7 +5,7 @@ import json
 
 # Replace 'your_username' with the GitHub username you want to retrieve repository details for
 github_username = 'octosrishti'
-token = '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'
+token = 'github_token'
 owner = 'octosrishti'
 # # Set the GitHub API endpoint for user's repositories
 # api_url = f'https://api.github.com/users/{owner}/repos'
