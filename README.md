@@ -1,4 +1,4 @@
-# Design Document for GitHub Data Retrieval and Analysis System
+# GitHub Data Retrieval and Analysis System
 Overview:
 
 The system is designed to retrieve and analyze GitHub data for specific queries. It reads parsed GitHub data from a JSON file, tokenizes and chunks the text, and then computes embeddings for these chunks. These embeddings are stored in a Pinecone index for efficient vector search. Finally, the system uses GPT-4 to generate reasoning for the top-k relevant chunks to a given query.
