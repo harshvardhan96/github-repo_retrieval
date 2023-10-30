@@ -157,10 +157,10 @@ def display_augmented_results(augmented_results, run_method):
         return inner_dict
 
 def main(user_input, primer_1):
-    api_key = "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"
+    api_key = "sk-..."
     embed_model = "text-embedding-ada-002"
-    pinecone_api_key = "83f50f91-c2e1-4686-bc19-b57f64b2c9ad"
-    environment = "us-central1-gcp"
+    pinecone_api_key = "83f..."
+    environment = "us-..."
     repo_index_name = "trial-repo-emb"
     chunk_index_name = "trial-1024-small"
     json_path = 'unique_languages.json'
