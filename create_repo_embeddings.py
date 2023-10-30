@@ -20,8 +20,8 @@ def check_and_create_folder(folder_path):
 
 # Initialize services
 def init_services(index_name = 'trial-1', index_emb_dim = 1536):
-    openai.api_key = "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"
-    pinecone.init(api_key="83f50f91-c2e1-4686-bc19-b57f64b2c9ad",  environment="us-central1-gcp")
+    openai.api_key = "sk-..."
+    pinecone.init(api_key="83f...",  environment="us-...")
     if index_name not in pinecone.list_indexes():
         pinecone.create_index(index_name, dimension=index_emb_dim, metric='cosine')
 
