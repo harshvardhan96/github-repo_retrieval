@@ -12,6 +12,12 @@ The code also allows for language filtering and detailed explanations of the rel
 ## Demo Link:
 https://huggingface.co/spaces/harshvardhan96/mercor_trial
 
+### Latency for different top_k values to be fetched:
+
+1. top_k = 5 : It takes around 250s to get the response.
+2. top_k = 2 : It takes around 130s to get the response.
+   
+
 ## Approach
 
 ### Initialization
