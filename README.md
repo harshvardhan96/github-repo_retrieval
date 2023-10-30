@@ -1,62 +1,67 @@
-# GitHub Data Retrieval and Analysis System
-Overview:
+# Readme.md for GitHub Data Retrieval System
 
-The system is designed to retrieve and analyze GitHub data for specific queries. It reads parsed GitHub data from a JSON file, tokenizes and chunks the text, and then computes embeddings for these chunks. These embeddings are stored in a Pinecone index for efficient vector search. Finally, the system uses GPT-4 to generate reasoning for the top-k relevant chunks to a given query.
+## Overview
 
-Workflow: 
+The code implements a specialized Information Retrieval System that aims to answer user queries about code repositories. The code uses OpenAI GPT-4 for natural language understanding and Pinecone for fast vector search. Two Pinecone indexes are used: 
 
-1. Data Collection:
+1. `trial-repo-emb`: Contains embeddings at the repository level, along with metadata like the name of the repository and the programming language used.
+2. `trial-1024-small`: Contains chunk-level embeddings of code within repositories.
 
-* 'get_user_repos()': It fetches details about all repositories for a given GitHub username. It returns a list of dictionaries, each containing information like the repository name, description, URL, programming language used, star count, and fork count.
+The code also allows for language filtering and detailed explanations of the relevancy of the fetched data based on different primers. The end-user interface is built using Gradio.
 
-* 'get_repo_tree()': It fetches the content of specific repositories. It retrieves the SHA value for the main branch of each repository using get_repo_sha, and then fetches the tree structure. The content of each file in the repository is decoded from base64 format and stored in a dictionary, which is then saved to a JSON file.
+## Approach
 
-2. Data Preparation: 
+### Initialization
+1. Initialize OpenAI GPT-4 and Pinecone indexes with API keys.
 
-* get_json_data(): Reads a JSON file and returns its content.
+### Language Filtering
+1. Load a pre-existing JSON file containing a list of unique programming languages (`unique_languages.json`).
+2. Use GPT-4 to filter these languages based on the query (`filter_languages` function). This is return a list of programming languages that are most relvant for the given user query. 
 
-* tiktoken_len(text): Computes the token length of a given text.
+### Query Embeddings
+1. Generate embeddings for the user's query using OpenAI's text embedding model (`query_embedding` function).
 
-* RecursiveCharacterTextSplitter: Splits text into smaller chunks.
+### Fetch Relevant Repositories
+1. Use the `trial-repo-emb` Pinecone index to find relevant repositories based on the query embedding and filtered languages (`fetch_relevant_repos` function).
 
-3. Embedding Model Initialization:
-   
-* Initialized the OpenAI API key.
-  
-* I used "text-embedding-ada-002" embedding model to compute the embeddings.
+### Fetch Chunk-Level Data
+1. Use the `trial-1024-small` Pinecone index to retrieve chunk-level data for the filtered repositories (`query_repos_by_name` function).
 
-4. Vector Index Initialization:
-   
-* Initialized Pinecone vector database to store meta data and embeddings. 
+### Augmented Queries
+1. Run additional queries using GPT-4 to provide detailed explanations for why each chunk or repo is relevant to the user query (`run_augmented_queries` function).
 
-5. Compute and Store Embeddings:
+### Display Results
+1. Display the results in a Gradio UI, including a JSON download option.
 
-* Divided the tokenized text data into batches.
-  
-* For each batch, computed the text embeddings.
-  
-*  Uploaded these embeddings to the initialized vector index.
+## JSON File Download
+The code allows the user to download the JSON file which contains augmented query results. This is achieved by creating a temporary JSON file for each dictionary item, storing the path in a list, and then passing it to the Gradio UI (`download_button`).
 
-6. User Query Input:
-   
-* Defined a text query from the user.
-  
-*  Created an embedding for the query using the same embedding model.
+## Customizable Primers
+It is not recommended to edit the primer drastically since it would change the output format. But if you want to include some additional info, or remove some information from  existing info, you can do so by editing the default primer value given below. 
 
-7. Execute Query and Retrieve Results:
-   
-* Used the query embedding to search the vector index.
-  
-*  Retrieved the top 5 most relevant chunks from GitHub repositories.
+#### Default Primer Value: 
+"""
+You are a highly intelligent content retrieval system that answers
+user queries. Think step by step and thoughtfully. You need to refer to 'context_text' and provide a brief three-sentence explanation detailing why that particular text is relevant to the query mentioned in 'Query'.
+Retrieve 1-2 sentence of programming code and do not return plain text that is not programming code. 
+By considering just the programming code present in the context_text, also provide a 1-2 line sentence regarding the technical complexity of programming code. 
+Also, consider the context_text and give a 1-2 line sentence about the overall architecture of the repository. 
+Also, provide a list of string values of the frameworks/libraries used in the repository. 
+Your answer should be in the format of a python dictionary: 
+{'repo_name':, 'summary':, 'relevant_code', 'technical complexity':, 'overall architecture':, 'frameworks_used':}
+Make sure that you scrutinize the context_text properly before providing the above response. 
+If the information can not be found in the information provided by the user you truthfully say "I don't know"
+"""
 
-8. Generate Explanations:
-   
-* For each of the top 5 repositories returned in the prevous response, I used GPT-4 to generate a brief explanation detailing its relevance to the query.
-  
-* To do this, I created an augmented query, where I combined the response with the query, and then defined my custom primer to give context to GPT-4 about the task that it needs to perform. The format of the augmented query is :
+#### Default Output Information Format:
+{'repo_name':, 'summary':, 'relevant_code', 'technical complexity':, 'overall architecture':, 'frameworks_used':}
 
-augmented_query = "{ 'Query':'" + query + "'," + "'chunk_list':'" + transformed_data_str + "'}"
-
-* The response of gpt4 for the system-user based query is. The input to this is the primer (which is basically giving context to the system about how to answer the user input queries, along with the augmented query defined in the previous step. )
-
-[{"id_1":, "summary_1":, "relevant_text_1":},{"id_2":, "summary_2":,"relevant_text_2":}]
+## Dependencies
+- OpenAI
+- Pinecone
+- json
+- re
+- ast
+- Gradio
+- io
+- tempfile
