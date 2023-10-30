@@ -21,15 +21,8 @@ usernames_list = df['githubUsername'].tolist()
 
 # Replace 'your_username' with the GitHub username you want to retrieve repository details for
 # github_username = 'octosrishti'
-# badeya token : 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
-# shourya token: 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
-# Khera token: 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
-# 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
-token = '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'
-# owner = 'octosrishti'
-# # Set the GitHub API endpoint for user's repositories
-# api_url = f'https://api.github.com/users/{owner}/repos'
-# Set the required headers
+token = 'github_...'
+
 headers = {
     'Accept': 'application/vnd.github+json',
     'Authorization': f'Bearer {token}',
@@ -80,50 +73,9 @@ def get_user_repos(github_username):
     else:
         print(f"User {github_username} not found on GitHub.")
 
-    # Now the repository details are stored in the `repository_details` list of dictionaries
-    # You can access and manipulate the data as needed.
-    # for repo in repository_details:
-    #     print("Repository Details:")
-    #     for key, value in repo.items():
-    #         print(f"{key}: {value}")
-    #     print("-" * 50)
-
-# for index, user in enumerate(usernames_list):
-#     print('Index:', index)
-#     print("user:", user)
-#     user_repo_meta_data = get_user_repos(user)
-#     user_meta_data_list.append({'user_name': user, 'repo_meta_data': user_repo_meta_data})
-#
-# repo_meta_data = {}
-# repo_meta_data['data'] = user_meta_data_list
-# # Save the content_list to a JSON file
-# with open('repo_meta_data.json', 'w') as json_file:
-#     json.dump(repo_meta_data, json_file, indent=4)
-
 
 repo_names = []
 
-# for repo in repo_details:
-#     print(repo['Repository Name'])
-#     repo_names.append(repo['Repository Name'])
-
-# test_repo_list = ['API_Development', 'Restaurant-poller', 'digital_clock']
-
-# def get_repo_sha(owner,repo_name, branch = "main"):
-#     # api_url = f'https://api.github.com/repos/{owner}/{repo_name}/git/trees/{branch}'
-#
-#     token = "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"
-#
-#     headers = {
-#         'Accept': 'application/vnd.github+json',
-#         'Authorization': f'Bearer {token}',
-#         'X-GitHub-Api-Version': '2022-11-28'
-#     }
-#
-#     api_url = 'https://api.github.com/repos/Abhinav-92/Game-Bots/git/trees/master'
-#     response1 = requests.get(api_url, headers=headers)
-#     data1 = response1.json()
-#     return data1['sha']
 
 def get_repo_sha(owner, repo_name, branch="main"):
     # Set the required headers
@@ -221,15 +173,6 @@ with open('repo_meta_data.json', 'r') as json_file:
     meta_json = json.load(json_file)
     meta_data = meta_json['data']
 
-# Badeya Data
-# custom_user_list = ['jaydeep-shelake', 'muhammedadil1024', 'yash-189', 'Chaitali2209', 'rahulsinghrks116', 'R4rohitm',
-#                     'Namchi7', 'Purav2003', 'Manu6677']
-
-# Harsh Data
-# custom_user_list = ['shrey-0407', 'octosrishti', 'vinay-jose', 'Paritosh008', 'Niteshkarmore7888', 'amanpratapsingh54', 'sushantnegee',
-#                     'SahilBharodiya', 'neelesh-s', 'sahilsandi07']
-
-#Shourya Data
 custom_user_list = ['hrishi12345', 'Shagun20-03', 'Nishantsingh9412', 'saurabhsaini400', 'Anshumanj95', 'ayu913',
                      'meenal2000', 'HarshP4585', 'Awizp', 'skmdsohel']
 
@@ -263,22 +206,6 @@ for user_data in meta_data:
                 repo_filename = os.path.join(user_directory, f'{repo["name"]}.json')
                 with open(repo_filename, 'w') as json_file:
                     json.dump(repo_tree_data, json_file)
-
-# get_repo_sha('Abhinav-92','Game-Bots', branch = "master")
-
-
-# for repo in test_repo_list:
-#     sha_val = get_repo_sha(owner,repo)
-#     print("SHA", sha_val)
-#     repo_tree_data[repo] = (get_repo_tree(owner, repo,sha_val))
-#
-# # Save the content_list to a JSON file
-# with open('repo_text_data.json', 'w') as json_file:
-#     json.dump(repo_tree_data, json_file, indent=4)
-#
-# for key, value in repo_tree_data.items():
-#     print(f"{key}: {value}")
-#     print("-" * 50)
 
 
 
