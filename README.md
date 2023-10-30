@@ -31,7 +31,7 @@ The code also allows for language filtering and detailed explanations of the rel
 1. Run additional queries using GPT-4 to provide detailed explanations for why each chunk or repo is relevant to the user query (`run_augmented_queries` function).
 
 ### Display Results
-1. Display the results in a Gradio UI, including a JSON download option.
+1. Display the results in a Gradio UI, including a JSON download option. To run the Gradio UI, run the main.py file after downloading the required dependencies for the project. 
 
 ## JSON File Download
 The code allows the user to download the JSON file which contains augmented query results. This is achieved by creating a temporary JSON file for each dictionary item, storing the path in a list, and then passing it to the Gradio UI (`download_button`).
