@@ -9,6 +9,9 @@ The code implements a specialized Information Retrieval System that aims to answ
 
 The code also allows for language filtering and detailed explanations of the relevancy of the fetched data based on different primers. The end-user interface is built using Gradio.
 
+## Demo Link:
+https://huggingface.co/spaces/harshvardhan96/mercor_trial
+
 ## Approach
 
 ### Initialization
